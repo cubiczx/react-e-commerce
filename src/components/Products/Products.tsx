@@ -21,7 +21,7 @@ export default function Products(props: { products: any, addProductToCart: (id: 
   }
 
   return (
-    <div className="products">
+    <div className="products" data-testid="products">
       <Container>
         <Row>
           {
