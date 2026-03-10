@@ -1,0 +1,12 @@
+import React from "react";
+import { Spinner } from "react-bootstrap";
+import './Loading.scss';
+
+export default function Loading() {
+  return (
+    <div className="loading" data-testid="loading">
+      <Spinner animation="border" variant="primary" role="status"/>
+      <h5>Cargando...</h5>
+    </div>
+  );
+}
