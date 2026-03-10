@@ -1,70 +1,302 @@
-# Getting Started with Create React App
+# React E-Commerce 🛒
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación de tienda online con catálogo de productos y carrito de compras funcional, utilizando una API mock para la gestión de productos y almacenamiento local para el carrito.
 
-## Available Scripts
+## 📋 Descripción
 
-In the project directory, you can run:
+Esta aplicación es una tienda de comercio electrónico con funcionalidades completas:
 
-### `npm start`
+- **Catálogo de productos**: Grid responsive con todos los productos disponibles
+- **Carrito de compras**: Panel lateral deslizante con gestión del carrito
+- **Gestión de cantidades**: Añadir, incrementar y decrementar cantidades de productos
+- **Eliminar productos**: Opciones para eliminar productos individuales o vaciar el carrito completo
+- **Persistencia de datos**: Almacenamiento local del carrito con localStorage
+- **Notificaciones**: Feedback visual al añadir/eliminar productos con toast notifications
+- **Cálculo de totales**: Precio total actualizado en tiempo real
+- **Estados de carga**: Indicadores de carga y manejo de errores
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tecnologías
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React 19
+- TypeScript
+- React Bootstrap v2
+- Bootstrap 5
+- SCSS/Sass
+- React Toastify
+- MockAPI
+- React Testing Library
+- Jest
 
-### `npm test`
+## 🚀 Cómo Ejecutar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisitos
 
-### `npm run build`
+- Node.js (v14 o superior)
+- npm o yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalación
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Navega al directorio del proyecto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd "react-e-commerce"
+```
 
-### `npm run eject`
+2. Instala las dependencias:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. (Opcional) Configura tu propia API en `src/utils/contants.ts`:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```ts
+export const API_BASE_URL = "tu_api_url_aquí";
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Ejecución en Desarrollo
 
-## Learn More
+```bash
+npm run dev
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+La aplicación se abrirá en [http://localhost:3000](http://localhost:3000).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Ejecutar Tests
 
-### Code Splitting
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Build para Producción
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📚 Conceptos Demostrados
 
-### Making a Progressive Web App
+### 1. **Custom Hook useFetch**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Hook reutilizable para peticiones a la API con manejo de estados:
 
-### Advanced Configuration
+```ts
+export default function useFetch(url: string, options?: RequestInit) {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  // ...
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 2. **Gestión de Estado del Carrito**
 
-### Deployment
+Manejo completo del estado del carrito con localStorage:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```tsx
+const addProductToCart = (id: number, name: string) => {
+  const idsProducts = [...productsInCart];
+  idsProducts.push(id);
+  setProductsInCart(idsProducts);
+  localStorage.setItem(STORAGE_PRODUCTS_IN_CART_KEY, JSON.stringify(idsProducts));
+  toast.success(`Producto ${name} agregado al carrito`);
+};
+```
 
-### `npm run build` fails to minify
+### 3. **Funciones Utilitarias para Arrays**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Funciones reutilizables para manipular arrays del carrito:
+
+```tsx
+// Contar duplicados para calcular cantidades
+countDuplicates(idProduct, productsInCart);
+
+// Eliminar duplicados para obtener productos únicos
+removeDuplicates(productsInCart);
+
+// Eliminar una ocurrencia del producto
+removeItemOnce(productsInCart, idProduct);
+```
+
+### 4. **Panel Lateral Deslizante**
+
+Carrito implementado como un panel lateral con ancho dinámico:
+
+```tsx
+const widthCartContent = cartOpen ? "400px" : "0px";
+```
+
+### 5. **Notificaciones Toast**
+
+Feedback visual para acciones del usuario:
+
+```tsx
+<ToastContainer
+  position="bottom-left"
+  autoClose={3000}
+  hideProgressBar
+  newestOnTop
+/>
+```
+
+### 6. **Grid Responsive con Bootstrap**
+
+Catálogo adaptable a diferentes tamaños de pantalla:
+
+```tsx
+<Container>
+  <Row>
+    {data.map((product) => (
+      <Product key={product.id} product={product} />
+    ))}
+  </Row>
+</Container>
+```
+
+### 7. **Modal de Confirmación**
+
+Confirmación antes de vaciar el carrito completo:
+
+```tsx
+<Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirmar acción</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>¿Estás seguro de que quieres vaciar el carrito?</Modal.Body>
+</Modal>
+```
+
+## 📁 Estructura del Proyecto
+
+```text
+react-e-commerce/
+├── public/
+│   ├── index.html
+│   └── img/
+├── src/
+│   ├── assets/
+│   │   └── svg/
+│   ├── components/
+│   │   ├── Cart/
+│   │   │   ├── Cart.tsx
+│   │   │   ├── Cart.scss
+│   │   │   ├── Cart.test.tsx
+│   │   │   └── index.tsx
+│   │   ├── Error/
+│   │   ├── Loading/
+│   │   ├── Product/
+│   │   ├── Products/
+│   │   └── TopMenu/
+│   ├── db/
+│   │   └── dbProducts.json
+│   ├── hooks/
+│   │   ├── useFetch.ts
+│   │   └── useFetch.test.ts
+│   ├── utils/
+│   │   ├── arrayFunctions.ts
+│   │   ├── arrayFunctions.test.ts
+│   │   └── contants.ts
+│   ├── App.tsx
+│   ├── index.scss
+│   └── index.tsx
+└── package.json
+```
+
+## 🎯 Características Principales
+
+### Catálogo de Productos
+
+- ✅ Grid responsive adaptado a móviles, tablets y escritorio
+- ✅ Tarjetas de productos con imagen, nombre y precio
+- ✅ Botón de añadir al carrito con icono dinámico
+- ✅ Estados de carga y error manejados
+
+### Carrito de Compras
+
+- ✅ Panel lateral deslizante con animación suave
+- ✅ Lista de productos con imagen, nombre, precio y cantidad
+- ✅ Botones para incrementar/decrementar cantidades
+- ✅ Eliminar productos individuales
+- ✅ Vaciar carrito completo con confirmación
+- ✅ Cálculo automático del precio total
+- ✅ Persistencia en localStorage
+
+### Notificaciones
+
+- ✅ Toast al añadir productos al carrito
+- ✅ Toast al eliminar productos
+- ✅ Toast al vaciar el carrito
+- ✅ Posición personalizable y auto-cierre
+
+### Estados de UI
+
+- ✅ Loading spinner durante la carga de productos
+- ✅ Mensajes de error si falla la petición
+- ✅ Icono del carrito cambia según esté vacío o lleno
+- ✅ Badge con número de productos en el carrito
+
+## 🧪 Testing
+
+El proyecto incluye tests para los componentes principales y funciones utilitarias:
+
+- Tests de componentes con React Testing Library
+- Tests de hooks personalizados
+- Tests de funciones auxiliares
+
+Ejecuta los tests con:
+
+```bash
+npm test
+```
+
+## 🔧 Configuración
+
+### API Mock
+
+El proyecto utiliza MockAPI para simular un backend. Para configurar tu propia API:
+
+1. **Crear cuenta en MockAPI**: Ve a [mockapi.io](https://mockapi.io) y crea una cuenta gratuita
+
+2. **Crear un nuevo proyecto**: Haz clic en "New Project" y dale un nombre
+
+3. **Crear el recurso de productos**:
+   - Haz clic en "New Resource"
+   - Nombre del recurso: `products`
+   - MockAPI generará automáticamente endpoints REST
+
+4. **Importar los datos de productos**:
+   - En la sección de datos del recurso `products`, haz clic en "Data"
+   - Copia el contenido del archivo `src/db/dbProducts.json`
+   - Pega el JSON en la interfaz de MockAPI para cargar los productos
+
+5. **Actualizar la URL en el proyecto**: Copia la URL de tu endpoint y actualízala en `src/utils/contants.ts`:
+
+```ts
+export const API_BASE_URL = "https://[tu-proyecto-id].mockapi.io/products";
+```
+
+> **Nota**: El proyecto ya incluye una API mock funcional. Solo necesitas seguir estos pasos si quieres usar tu propia instancia de MockAPI.
+
+### localStorage
+
+El carrito se persiste en localStorage con la clave definida en:
+
+```ts
+export const STORAGE_PRODUCTS_IN_CART_KEY = "productsInCart";
+```
+
+## 🤝 Contribuciones
+
+Este es un proyecto educativo. Siéntete libre de hacer fork y experimentar con diferentes conceptos de React.
+
+## 📝 Licencia
+
+MIT
+
+## 👨‍💻 Autor
+
+**Xavier Palacín Ayuso**
+Email: cubiczx@hotmail.com
+GitHub: [@cubiczx](https://github.com/cubiczx)
+
+Proyecto creado como parte del curso de React en Udemy.
