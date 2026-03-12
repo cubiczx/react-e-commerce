@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="E-Commerce web application built with React"
-    />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Helados Palacín - Compra los mejores helados online. Sándwich de nata, cucuruchos de vainilla, mini surtidos y más. Envío rápido y sabor garantizado. ¡Refresca tu día con nuestros helados artesanales!" />
+    <meta name="keywords" content="helados online, helados Palacín, comprar helados, helados a domicilio, helados artesanales, sándwich de nata, cucurucho vainilla, mini surtido helados, helados para casa" />
+    <meta name="author" content="Helados Palacín" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://heladospalacin.com/" />
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Helados Palacín - Los Mejores Helados Artesanales Online" />
+    <meta property="og:description" content="Descubre nuestra deliciosa variedad de helados. Sándwich de nata, cucuruchos, mini surtidos y más. Envío rápido a domicilio. ¡El sabor del verano en tu casa!" />
+    <meta property="og:image" content="%PUBLIC_URL%/logo192.png" />
+    <meta property="og:url" content="https://heladospalacin.com/" />
+    <meta property="og:site_name" content="Helados Palacín" />
+    <meta property="og:locale" content="es_ES" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Helados Palacín - Los Mejores Helados Artesanales Online" />
+    <meta name="twitter:description" content="Descubre nuestra deliciosa variedad de helados. Envío rápido a domicilio. ¡El sabor del verano en tu casa!" />
+    <meta name="twitter:image" content="%PUBLIC_URL%/logo192.png" />
+    
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,7 +43,29 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React E-Commerce</title>
+    <title>Helados Palacín - Compra los Mejores Helados Artesanales Online | Envío Rápido</title>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Helados Palacín",
+      "image": "https://heladospalacin.com/logo192.png",
+      "url": "https://heladospalacin.com/",
+      "description": "Tienda online de helados artesanales. Sándwich de nata, cucuruchos de vainilla, mini surtidos y más variedades deliciosas.",
+      "priceRange": "€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "ES"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://heladospalacin.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -1,0 +1,104 @@
+.footer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 3rem 0 1.5rem;
+  margin-top: 4rem;
+
+  .footer-section {
+    margin-bottom: 2rem;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+      line-height: 1.6;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.75rem;
+
+        a {
+          color: white;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          opacity: 0.9;
+
+          &:hover {
+            opacity: 1;
+            color: var(--ice-mint);
+            transform: translateX(5px);
+            display: inline-block;
+          }
+        }
+      }
+
+      &.contact-info li {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+
+    p {
+      margin: 0.5rem 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    .made-with-love {
+      .heart {
+        color: #ff6b9d;
+        animation: heartbeat 1.5s ease-in-out infinite;
+        display: inline-block;
+      }
+    }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 0 1rem;
+    margin-top: 3rem;
+
+    .footer-section {
+      text-align: center;
+      margin-bottom: 1.5rem;
+
+      h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .footer-bottom {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+    }
+  }
+}

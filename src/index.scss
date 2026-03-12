@@ -1,13 +1,68 @@
+// Color palette para Helados Palacín
+:root {
+  --primary-color: #ff6b9d;
+  --secondary-color: #c44569;
+  --accent-color: #ffa502;
+  --ice-blue: #74b9ff;
+  --ice-cyan: #00cec9;
+  --ice-mint: #55efc4;
+  --ice-lavender: #a29bfe;
+  --soft-pink: #fd79a8;
+  --vanilla: #ffeaa7;
+  --chocolate: #6c5ce7;
+  --text-dark: #2d3436;
+  --text-light: #636e72;
+  --background-light: #f8f9fa;
+  --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(to bottom, #ffeef8 0%, #fff 100%);
+  color: var(--text-dark);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+// Utility classes
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Improve button focus
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+// Link styles
+a {
+  color: var(--ice-blue);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+

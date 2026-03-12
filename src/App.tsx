@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TopMenu from "./components/TopMenu";
+import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
+import Contact from "./components/Contact";
 import useFetch from "./hooks/useFetch";
 import { API_BASE_URL, STORAGE_PRODUCTS_IN_CART_KEY } from "./utils/contants";
 import Products from "./components/Products";
@@ -32,29 +36,41 @@ function App() {
       JSON.stringify(idsProducts),
     );
     getProductsInCartFromLocalStorage();
-    toast.success(`Producto ${name} agregado al carrito`);
+    toast.success(`${name} agregado al carrito 🍦`);
   };
 
   return (
-    <div className="App">
-      <TopMenu
-        productsInCart={productsInCart}
-        getProductsInCartFromLocalStorage={getProductsInCartFromLocalStorage}
-        products={products}
-      />
-      <Products products={products} addProductToCart={addProductToCart} />
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover
-      />
-    </div>
+    <Router>
+      <div className="App">
+        <TopMenu
+          productsInCart={productsInCart}
+          getProductsInCartFromLocalStorage={getProductsInCartFromLocalStorage}
+          products={products}
+        />
+        
+        <Routes>
+          <Route 
+            path="/" 
+            element={<Products products={products} addProductToCart={addProductToCart} />} 
+          />
+          <Route path="/sobre-nosotros" element={<AboutUs />} />
+          <Route path="/contacto" element={<Contact />} />
+        </Routes>
+
+        <Footer />
+        <ToastContainer
+          position="bottom-left"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover
+        />
+      </div>
+    </Router>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Navbar } from "react-bootstrap";
 import { ReactComponent as Logo } from "../../assets/svg/logo.svg";
 import Cart from "../Cart";
@@ -32,7 +33,7 @@ export default function TopMenu(props: {
 
 function BrandNav() {
   return (
-    <Navbar.Brand href="#home">
+    <Navbar.Brand as={Link} to="/">
       <Logo
         className="d-inline-block align-top"
         aria-label="Helados Palacín logo"

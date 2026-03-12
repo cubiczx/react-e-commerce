@@ -9,9 +9,9 @@ interface ErrorProps {
 
 export default function Error({ message = "Ha ocurrido un error inesperado." }: ErrorProps) {
   return (
-    <div className="error">
+    <div className="error" role="alert" aria-live="assertive">
       <Alert variant="danger">
-        <Alert.Heading>Error</Alert.Heading>
+        <Alert.Heading>¡Ups! Algo salió mal</Alert.Heading>
         <p>{message}</p>
       </Alert>
     </div>
