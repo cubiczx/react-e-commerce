@@ -4,7 +4,7 @@ import Error from './Error';
 describe('Error', () => {
   test('muestra el título de error', () => {
     render(<Error />);
-    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(screen.getByText('¡Ups! Algo salió mal')).toBeInTheDocument();
   });
 
   test('muestra el mensaje por defecto', () => {

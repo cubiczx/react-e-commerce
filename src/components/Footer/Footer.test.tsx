@@ -4,8 +4,9 @@ import Footer from "./Footer";
 describe("Footer", () => {
   it("renders footer content correctly", () => {
     render(<Footer />);
-    
-    expect(screen.getByText(/Helados Palacín/i)).toBeInTheDocument();
+
+    const heladosPalacin = screen.getAllByText(/Helados Palacín/i);
+    expect(heladosPalacin.length).toBeGreaterThan(0);
     expect(screen.getByText(/Todos los derechos reservados/i)).toBeInTheDocument();
   });
 

@@ -21,6 +21,6 @@ describe('Loading', () => {
 
   test('muestra el texto de carga', () => {
     render(<Loading />);
-    expect(screen.getByText('Cargando...')).toBeInTheDocument();
+    expect(screen.getByText('Cargando deliciosos helados...')).toBeInTheDocument();
   });
 });

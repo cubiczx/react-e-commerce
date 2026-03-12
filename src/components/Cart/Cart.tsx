@@ -25,6 +25,7 @@ export default function Cart(props: {
   const [singleProductInCart, setSingleProductInCart] = useState<any>(null);
   const [cartTotalPrice, setCartTotalPrice] = useState(0);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [removingItems, setRemovingItems] = useState<number[]>([]);
 
   useEffect(() => {
     const allProductsInCart = removeDuplicates(productsInCart).sort(
@@ -76,10 +77,18 @@ export default function Cart(props: {
   };
 
   const confirmEmptyCart = () => {
-    localStorage.removeItem(STORAGE_PRODUCTS_IN_CART_KEY);
-    getProductsInCartFromLocalStorage();
-    setShowConfirmModal(false);
-    toast.success("Carrito vaciado");
+    // Agregar todos los productos a la lista de eliminación
+    const allProductIds = removeDuplicates(productsInCart);
+    setRemovingItems(allProductIds);
+    
+    // Esperar a que termine la animación antes de eliminar
+    setTimeout(() => {
+      localStorage.removeItem(STORAGE_PRODUCTS_IN_CART_KEY);
+      getProductsInCartFromLocalStorage();
+      setRemovingItems([]);
+      setShowConfirmModal(false);
+      toast.success("Carrito vaciado");
+    }, 500);
   };
 
   const increaseQuantity = (idProduct: number) => {
@@ -94,9 +103,24 @@ export default function Cart(props: {
 
   const decreaseQuantity = (idProduct: number) => {
     const idsProducts = [...productsInCart];
-    const result = removeItemOnce(idsProducts, idProduct);
-    localStorage.setItem(STORAGE_PRODUCTS_IN_CART_KEY, JSON.stringify(result));
-    getProductsInCartFromLocalStorage();
+    const currentQuantity = countDuplicates(idProduct, idsProducts);
+    
+    // Si solo queda 1 unidad, agregar animación de salida
+    if (currentQuantity === 1) {
+      setRemovingItems([...removingItems, idProduct]);
+      
+      // Esperar a que termine la animación antes de eliminar
+      setTimeout(() => {
+        const result = removeItemOnce(idsProducts, idProduct);
+        localStorage.setItem(STORAGE_PRODUCTS_IN_CART_KEY, JSON.stringify(result));
+        getProductsInCartFromLocalStorage();
+        setRemovingItems(removingItems.filter(id => id !== idProduct));
+      }, 500);
+    } else {
+      const result = removeItemOnce(idsProducts, idProduct);
+      localStorage.setItem(STORAGE_PRODUCTS_IN_CART_KEY, JSON.stringify(result));
+      getProductsInCartFromLocalStorage();
+    }
   };
 
   return (
@@ -108,6 +132,15 @@ export default function Cart(props: {
           <CartEmpty onClick={openCart} />
         )}
       </Button>
+      
+      {/* Backdrop/Overlay que cierra el carrito al hacer clic fuera */}
+      {cartOpen && (
+        <div 
+          className="cart-backdrop" 
+          onClick={closeCart}
+        />
+      )}
+      
       <div className="cart-content" style={{ width: widthCartContent }}>
         <CartContentHeader closeCart={closeCart} emptyCart={emptyCart} productsInCart={productsInCart} />
         <div className="cart-content__products">
@@ -119,8 +152,7 @@ export default function Cart(props: {
                 idsProducts={productsInCart}
                 idProduct={productId}
                 increaseQuantity={increaseQuantity}
-                decreaseQuantity={decreaseQuantity}
-              />
+                decreaseQuantity={decreaseQuantity}                isRemoving={removingItems.includes(productId)}              />
             ))}
         </div>
         <CartContentFooter cartTotalPrice={cartTotalPrice} />
@@ -178,6 +210,7 @@ function CartContentProducts(props: any) {
     idProduct,
     increaseQuantity,
     decreaseQuantity,
+    isRemoving,
   } = props;
 
   if (!loading && data) {
@@ -191,6 +224,7 @@ function CartContentProducts(props: any) {
             quantity={quantity}
             increaseQuantity={increaseQuantity}
             decreaseQuantity={decreaseQuantity}
+            isRemoving={isRemoving}
           />
         );
       }
@@ -203,10 +237,10 @@ function CartContentProducts(props: any) {
 }
 
 function RenderProduct(props: any) {
-  const { product, quantity, increaseQuantity, decreaseQuantity } = props;
+  const { product, quantity, increaseQuantity, decreaseQuantity, isRemoving } = props;
 
   return (
-    <div key={product.id} className="cart-content__product">
+    <div key={product.id} className={`cart-content__product ${isRemoving ? 'removing' : ''}`}>
       <img src={`${BASE_PATH}/${product.image}`} alt={product.name} />
       <div className="cart-content__product-info">
         <div>

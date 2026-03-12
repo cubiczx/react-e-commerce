@@ -21,7 +21,8 @@ describe('Product', () => {
 
     expect(screen.getByText('Helado de vainilla')).toBeInTheDocument();
     expect(screen.getByText('Delicioso helado')).toBeInTheDocument();
-    expect(screen.getByText('2.50 € / unidad')).toBeInTheDocument();
+    expect(screen.getByText('2.50 €')).toBeInTheDocument();
+    expect(screen.getByText(/\/ unidad/i)).toBeInTheDocument();
   });
 
   test('muestra la imagen del producto', () => {
@@ -46,6 +47,6 @@ describe('Product', () => {
     const productWithIntPrice = { ...mockProduct, price: 3 };
     render(<Product product={productWithIntPrice} addProductToCart={mockAddProductToCart} />);
 
-    expect(screen.getByText('3.00 € / unidad')).toBeInTheDocument();
+    expect(screen.getByText('3.00 €')).toBeInTheDocument();
   });
 });

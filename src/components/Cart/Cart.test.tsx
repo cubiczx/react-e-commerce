@@ -157,4 +157,29 @@ describe('Cart', () => {
     // Ahora sí debe mostrar el botón
     expect(screen.getByText('Tramitar pedido')).toBeInTheDocument();
   });
+
+  test('cierra el carrito al hacer clic en el botón de cerrar', () => {
+    const { container } = render(
+      <Cart
+        productsInCart={[1]}
+        getProductsInCartFromLocalStorage={mockGetProductsInCartFromLocalStorage}
+        products={mockProducts}
+      />
+    );
+
+    // Abrir carrito
+    const cartButtons = screen.getAllByRole('button');
+    fireEvent.click(cartButtons[0]);
+
+    // Verificar que el carrito está abierto
+    expect(screen.getByText('Carrito')).toBeInTheDocument();
+
+    // Hacer clic en el botón de cerrar
+    const closeButton = screen.getByText('Close');
+    fireEvent.click(closeButton);
+
+    // El carrito debería cerrarse (verificar que el ancho sea 0px)
+    const cartContent = container.querySelector('.cart-content');
+    expect(cartContent).toHaveStyle({ width: '0px' });
+  });
 });

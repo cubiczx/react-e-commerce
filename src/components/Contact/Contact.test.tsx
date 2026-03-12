@@ -10,7 +10,8 @@ describe("Contact", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Contacto/i)).toBeInTheDocument();
+    const contactoElements = screen.getAllByText(/Contacto/i);
+    expect(contactoElements.length).toBeGreaterThan(0);
     expect(screen.getByText(/Xavier Palacín Ayuso/i)).toBeInTheDocument();
   });
 

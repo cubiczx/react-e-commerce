@@ -46,12 +46,13 @@ jest.mock('./assets/svg/garbage.svg', () => ({
 describe('App', () => {
   test('renderiza el componente App correctamente', () => {
     render(<App />);
-    expect(screen.getByText('Helados Palacín')).toBeInTheDocument();
+    const heladosPalacin = screen.getAllByText('Helados Palacín');
+    expect(heladosPalacin.length).toBeGreaterThan(0);
   });
 
   test('renderiza el TopMenu', () => {
     render(<App />);
-    const heading = screen.getByText('Helados Palacín');
-    expect(heading).toBeInTheDocument();
+    const heladosPalacin = screen.getAllByText('Helados Palacín');
+    expect(heladosPalacin.length).toBeGreaterThan(0);
   });
 });
